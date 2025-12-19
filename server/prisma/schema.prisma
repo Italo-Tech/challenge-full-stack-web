@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Student {
+  id          String       @id @default(uuid())
+  name        String
+  email       String       @unique
+  ra          String       @unique
+  cpf         String       @unique @db.VarChar(11)
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  
+  // Relação 1:N. Um estudante/aluno pode ter várias matrículas (enrollments).
+  enrollments Enrollment[]
+
+  @@map("students")
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  name        String
+  description String?  @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+  
+  // Relação 1:N. Um curso pode ter várias turmas (classes).
+  classes     Class[]
+
+  @@map("courses")
+}
+
+model Class {
+  id         String       @id @default(uuid())
+  courseId   String       @map("course_id")
+  name       String
+  startDate  DateTime     @map("start_date")
+  endDate    DateTime     @map("end_date")
+  createdAt  DateTime     @default(now()) @map("created_at")
+  
+  // Relação N:1 com Course. Cada turma pertence a um curso.
+  course     Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  // Relação 1:N. Uma turma pode ter muitos alunos matriculados (enrollments).
+  enrollments Enrollment[]
+
+  @@map("classes")
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  CANCELED
+}
+
+model Enrollment {
+  id         String           @id @default(uuid())
+  studentId  String           @map("student_id")
+  classId    String           @map("class_id")
+  enrolledAt DateTime         @default(now()) @map("enrolled_at")
+  status     EnrollmentStatus @default(ACTIVE)
+  
+  // Relação N:1. Cada matrícula pertence a um aluno.
+  student    Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  // Relação N:1. Cada matrícula pertence a uma turma.
+  class      Class            @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, classId])
+  @@map("enrollments")
+}
