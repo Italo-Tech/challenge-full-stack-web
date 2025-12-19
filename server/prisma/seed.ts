@@ -19,10 +19,12 @@ async function main() {
   });
 
   console.log('✅ Usuário admin criado:', admin.email);
+}
 
 main()
   .catch((e) => {
     console.error('❌ Erro ao executar seed:', e);
+    
     process.exit(1);
   })
   .finally(async () => {
