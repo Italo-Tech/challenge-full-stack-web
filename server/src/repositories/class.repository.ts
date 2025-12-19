@@ -1,0 +1,115 @@
+import prisma from '../config/prisma';
+import { CreateClassDTO, UpdateClassDTO } from '../dtos/class.dto';
+
+export class ClassRepository {
+  async findAll() {
+    return await prisma.class.findMany({
+      orderBy: { startDate: 'desc' },
+      include: {
+        course: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        enrollments: {
+          include: {
+            student: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                ra: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  async findById(id: string) {
+    return await prisma.class.findUnique({
+      where: { id },
+      include: {
+        course: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        enrollments: {
+          include: {
+            student: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                ra: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  async findByCourseId(courseId: string) {
+    return await prisma.class.findMany({
+      where: { courseId },
+      orderBy: { startDate: 'desc' },
+      include: {
+        course: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+  }
+
+  async create(data: CreateClassDTO) {
+    return await prisma.class.create({
+      data: {
+        courseId: data.courseId,
+        name: data.name,
+        startDate: new Date(data.startDate),
+        endDate: new Date(data.endDate),
+      },
+      include: {
+        course: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+  }
+
+  async update(id: string, data: UpdateClassDTO) {
+    return await prisma.class.update({
+      where: { id },
+      data: {
+        ...data,
+        startDate: data.startDate ? new Date(data.startDate) : undefined,
+        endDate: data.endDate ? new Date(data.endDate) : undefined,
+      },
+      include: {
+        course: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+  }
+
+  async delete(id: string) {
+    return await prisma.class.delete({
+      where: { id },
+    });
+  }
+}
