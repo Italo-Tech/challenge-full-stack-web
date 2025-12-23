@@ -62,6 +62,7 @@ export class EnrollmentRepository {
     });
   }
 
+  // Not used yet
   async findByStudentId(studentId: string) {
     return await prisma.enrollment.findMany({
       where: { studentId },
@@ -85,6 +86,7 @@ export class EnrollmentRepository {
     });
   }
 
+  // Not used yet
   async findByClassId(classId: string) {
     return await prisma.enrollment.findMany({
       where: { classId },
@@ -170,6 +172,7 @@ export class EnrollmentRepository {
     });
   }
 
+  // Not used yet
   async delete(id: string) {
     return await prisma.enrollment.delete({
       where: { id },
