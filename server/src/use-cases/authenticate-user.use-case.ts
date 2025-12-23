@@ -23,11 +23,11 @@ export class AuthenticateUserUseCase {
     }
 
     // Generate JWT token
-    const token = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_SECRET || 'secret',
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
-    );
+    const payload = { userId: user.id };
+    const secret = process.env.JWT_SECRET || 'secret';
+    const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
+    
+    const token = jwt.sign(payload, secret, { expiresIn: expiresIn as any });
 
     return {
       user: {
