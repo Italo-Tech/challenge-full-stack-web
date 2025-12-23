@@ -14,6 +14,24 @@ export class StudentRepository {
     });
   }
 
+  async findByEmail(email: string) {
+    return await prisma.student.findUnique({
+      where: { email },
+    });
+  }
+
+  async findByRA(ra: string) {
+    return await prisma.student.findUnique({
+      where: { ra },
+    });
+  }
+
+  async findByCPF(cpf: string) {
+    return await prisma.student.findUnique({
+      where: { cpf },
+    });
+  }
+
   async create(data: CreateStudentDTO) {
     return await prisma.student.create({
       data,
