@@ -28,6 +28,7 @@ export class ClassRepository {
     });
   }
 
+  // Not used yet
   async findById(id: string) {
     return await prisma.class.findUnique({
       where: { id },
@@ -54,6 +55,7 @@ export class ClassRepository {
     });
   }
 
+  // Not used yet
   async findByCourseId(courseId: string) {
     return await prisma.class.findMany({
       where: { courseId },
@@ -88,6 +90,7 @@ export class ClassRepository {
     });
   }
 
+  // Not used yet
   async update(id: string, data: UpdateClassDTO) {
     return await prisma.class.update({
       where: { id },
@@ -107,6 +110,7 @@ export class ClassRepository {
     });
   }
 
+  // Not used yet
   async delete(id: string) {
     return await prisma.class.delete({
       where: { id },
