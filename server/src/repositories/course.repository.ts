@@ -4,18 +4,23 @@ import { CreateCourseDTO, UpdateCourseDTO } from '../dtos/course.dto';
 export class CourseRepository {
   async findAll() {
     return await prisma.course.findMany({
+      where: { deletedAt: null },
       orderBy: { createdAt: 'desc' },
       include: {
-        classes: true,
+        classes: {
+          where: { deletedAt: null },
+        },
       },
     });
   }
 
   async findById(id: string) {
-    return await prisma.course.findUnique({
-      where: { id },
+    return await prisma.course.findFirst({
+      where: { id, deletedAt: null },
       include: {
-        classes: true,
+        classes: {
+          where: { deletedAt: null },
+        },
       },
     });
   }
@@ -34,8 +39,9 @@ export class CourseRepository {
   }
 
   async delete(id: string) {
-    return await prisma.course.delete({
+    return await prisma.course.update({
       where: { id },
+      data: { deletedAt: new Date() },
     });
   }
 }

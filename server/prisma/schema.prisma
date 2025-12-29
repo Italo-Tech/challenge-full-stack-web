@@ -17,6 +17,7 @@ model User {
   name      String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
 
   @@map("users")
 }
@@ -29,6 +30,7 @@ model Student {
   cpf         String       @unique @db.VarChar(11)
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt @map("updated_at")
+  deletedAt   DateTime?    @map("deleted_at")
   
   // Relação 1:N. Um estudante/aluno pode ter várias matrículas (enrollments).
   enrollments Enrollment[]
@@ -41,6 +43,7 @@ model Course {
   name        String
   description String?  @db.Text
   createdAt   DateTime @default(now()) @map("created_at")
+  deletedAt   DateTime? @map("deleted_at")
   
   // Relação 1:N. Um curso pode ter várias turmas (classes).
   classes     Class[]
@@ -55,6 +58,7 @@ model Class {
   startDate  DateTime     @map("start_date")
   endDate    DateTime     @map("end_date")
   createdAt  DateTime     @default(now()) @map("created_at")
+  deletedAt  DateTime?    @map("deleted_at")
   
   // Relação N:1 com Course. Cada turma pertence a um curso.
   course     Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
@@ -75,6 +79,7 @@ model Enrollment {
   classId    String           @map("class_id")
   enrolledAt DateTime         @default(now()) @map("enrolled_at")
   status     EnrollmentStatus @default(ACTIVE)
+  deletedAt  DateTime?        @map("deleted_at")
   
   // Relação N:1. Cada matrícula pertence a um aluno.
   student    Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)

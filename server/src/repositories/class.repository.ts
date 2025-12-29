@@ -4,6 +4,7 @@ import { CreateClassDTO, UpdateClassDTO } from '../dtos/class.dto';
 export class ClassRepository {
   async findAll() {
     return await prisma.class.findMany({
+      where: { deletedAt: null },
       orderBy: { startDate: 'desc' },
       include: {
         course: {
@@ -13,6 +14,7 @@ export class ClassRepository {
           },
         },
         enrollments: {
+          where: { deletedAt: null },
           include: {
             student: {
               select: {
@@ -30,8 +32,8 @@ export class ClassRepository {
 
   // Not used yet
   async findById(id: string) {
-    return await prisma.class.findUnique({
-      where: { id },
+    return await prisma.class.findFirst({
+      where: { id, deletedAt: null },
       include: {
         course: {
           select: {
@@ -40,6 +42,7 @@ export class ClassRepository {
           },
         },
         enrollments: {
+          where: { deletedAt: null },
           include: {
             student: {
               select: {
@@ -58,7 +61,7 @@ export class ClassRepository {
   // Not used yet
   async findByCourseId(courseId: string) {
     return await prisma.class.findMany({
-      where: { courseId },
+      where: { courseId, deletedAt: null },
       orderBy: { startDate: 'desc' },
       include: {
         course: {
@@ -112,8 +115,9 @@ export class ClassRepository {
 
   // Not used yet
   async delete(id: string) {
-    return await prisma.class.delete({
+    return await prisma.class.update({
       where: { id },
+      data: { deletedAt: new Date() },
     });
   }
 }

@@ -4,6 +4,7 @@ import { CreateEnrollmentDTO } from '../dtos/enrollment.dto';
 export class EnrollmentRepository {
   async findAll() {
     return await prisma.enrollment.findMany({
+      where: { deletedAt: null },
       orderBy: { enrolledAt: 'desc' },
       include: {
         student: {
@@ -33,8 +34,8 @@ export class EnrollmentRepository {
   }
 
   async findById(id: string) {
-    return await prisma.enrollment.findUnique({
-      where: { id },
+    return await prisma.enrollment.findFirst({
+      where: { id, deletedAt: null },
       include: {
         student: {
           select: {
@@ -65,7 +66,7 @@ export class EnrollmentRepository {
   // Not used yet
   async findByStudentId(studentId: string) {
     return await prisma.enrollment.findMany({
-      where: { studentId },
+      where: { studentId, deletedAt: null },
       orderBy: { enrolledAt: 'desc' },
       include: {
         class: {
@@ -89,7 +90,7 @@ export class EnrollmentRepository {
   // Not used yet
   async findByClassId(classId: string) {
     return await prisma.enrollment.findMany({
-      where: { classId },
+      where: { classId, deletedAt: null },
       orderBy: { enrolledAt: 'desc' },
       include: {
         student: {
@@ -105,12 +106,11 @@ export class EnrollmentRepository {
   }
 
   async findByStudentAndClass(studentId: string, classId: string) {
-    return await prisma.enrollment.findUnique({
+    return await prisma.enrollment.findFirst({
       where: {
-        studentId_classId: {
-          studentId,
-          classId,
-        },
+        studentId,
+        classId,
+        deletedAt: null,
       },
     });
   }
@@ -174,8 +174,9 @@ export class EnrollmentRepository {
 
   // Not used yet
   async delete(id: string) {
-    return await prisma.enrollment.delete({
+    return await prisma.enrollment.update({
       where: { id },
+      data: { deletedAt: new Date() },
     });
   }
 }
