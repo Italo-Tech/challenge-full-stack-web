@@ -52,6 +52,13 @@
           </div>
         </template>
 
+        <template v-slot:item.enrollments="{ item }">
+          <v-chip size="small" color="primary" variant="tonal">
+            <v-icon start size="small">mdi-account-group</v-icon>
+            {{ item.enrollments?.length || 0 }}
+          </v-chip>
+        </template>
+
         <template v-slot:item.startDate="{ item }">
           <v-chip size="small" color="success" variant="tonal">
             {{ formatDateToBrazilian(item.startDate) }}
@@ -293,6 +300,7 @@ const loadingCourses = ref(false)
 const headers = [
   { title: 'Nome', key: 'name', sortable: true },
   { title: 'Curso', key: 'course', sortable: true },
+  { title: 'Alunos', key: 'enrollments', sortable: true, align: 'center' as const },
   { title: 'Data de Início', key: 'startDate', sortable: true },
   { title: 'Data de Término', key: 'endDate', sortable: true },
   { title: 'Ações', key: 'actions', sortable: false, align: 'center' as const },

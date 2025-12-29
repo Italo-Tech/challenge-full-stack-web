@@ -32,12 +32,12 @@ const router = createRouter({
       component: () => import('@/views/ClassesView.vue'),
       meta: { requiresAuth: true },
     },
-    // {
-    //   path: '/enrollments',
-    //   name: 'enrollments',
-    //   component: () => import('@/views/EnrollmentsView.vue'),
-    //   meta: { requiresAuth: true },
-    // },
+    {
+      path: '/enrollments',
+      name: 'enrollments',
+      component: () => import('@/views/EnrollmentsView.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 })
 

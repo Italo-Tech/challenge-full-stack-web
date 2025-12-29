@@ -47,6 +47,12 @@ export interface Class {
   createdAt: string
   updatedAt: string
   course?: Course
+  enrollments?: Array<{
+    id: string
+    studentId: string
+    classId: string
+    status: 'ACTIVE' | 'CANCELED'
+  }>
 }
 
 export interface CreateClassDTO {
@@ -66,10 +72,32 @@ export interface Enrollment {
   id: string
   studentId: string
   classId: string
-  status: 'active' | 'cancelled'
-  enrollmentDate: string
-  student?: Student
-  class?: Class
+  status: 'ACTIVE' | 'CANCELED'
+  enrolledAt: string
+  student?: {
+    id: string
+    name: string
+    email: string
+    ra: string
+  }
+  class?: {
+    id: string
+    name: string
+    course?: {
+      id: string
+      name: string
+    }
+  }
+}
+
+export interface CreateEnrollmentDTO {
+  studentId: string
+  classId: string
+  status?: 'ACTIVE' | 'CANCELED'
+}
+
+export interface UpdateEnrollmentDTO {
+  status: 'ACTIVE' | 'CANCELED'
 }
 
 export interface LoginDTO {

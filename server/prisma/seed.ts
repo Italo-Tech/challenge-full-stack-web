@@ -3,6 +3,7 @@ import { seedUsers } from './seeds/user.seed';
 import { seedStudents } from './seeds/student.seed';
 import { seedCourses } from './seeds/course.seed';
 import { seedClasses } from './seeds/class.seed';
+import { seedEnrollments } from './seeds/enrollment.seed';
 
 const prisma = new PrismaClient();
 
@@ -16,6 +17,9 @@ async function main() {
   await seedCourses(prisma);
 
   await seedClasses(prisma);
+  console.log('');
+
+  await seedEnrollments(prisma);
 
   console.log('🎉 Seed concluído com sucesso!');
 }
