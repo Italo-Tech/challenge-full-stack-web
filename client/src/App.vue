@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar v-if="authStore.isAuthenticated" color="primary" elevation="2">
+    <v-app-bar v-if="authStore.isAuthenticated" color="cyan-darken-4" elevation="2">
       <v-app-bar-title>
         <v-icon class="mr-2">mdi-school</v-icon>
         Edtech - Sistema Acadêmico

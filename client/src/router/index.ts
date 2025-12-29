@@ -14,12 +14,12 @@ const router = createRouter({
       component: () => import('@/views/LoginView.vue'),
       meta: { requiresGuest: true },
     },
-    // {
-    //   path: '/students',
-    //   name: 'students',
-    //   component: () => import('@/views/StudentsView.vue'),
-    //   meta: { requiresAuth: true },
-    // },
+    {
+      path: '/students',
+      name: 'students',
+      component: () => import('@/views/StudentsView.vue'),
+      meta: { requiresAuth: true },
+    },
     // {
     //   path: '/courses',
     //   name: 'courses',
