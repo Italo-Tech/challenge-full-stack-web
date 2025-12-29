@@ -44,12 +44,6 @@ server/
 ### Routes (Rotas)
 
 - **Responsabilidade**: Definir os endpoints da API e mapear para os controladores correspondentes
-- **Localização**: `src/routes/`
-- **Exemplo**: 
-  ```typescript
-  router.post('/students', studentController.create);
-  router.get('/students', studentController.list);
-  ```
 
 ### Controllers (Controladores)
 
@@ -58,19 +52,6 @@ server/
   - Orquestrar a execução dos use-cases
   - Retornar respostas HTTP apropriadas
   - **NÃO contém regras de negócio**
-  
-- **Localização**: `src/controllers/`
-- **Padrão**:
-  ```typescript
-  export class StudentController {
-    async create(req: Request, res: Response) {
-      const repository = new StudentRepository();
-      const useCase = new CreateStudentUseCase(repository);
-      const result = await useCase.execute(req.body);
-      return res.status(201).json(result);
-    }
-  }
-  ```
 
 ### Use Cases (Casos de Uso)
 
@@ -82,18 +63,6 @@ server/
 
 - **Localização**: `src/use-cases/`
 - **Organização**: Separados por domínio (student, course, class, enrollment, auth)
-- **Padrão**:
-  ```typescript
-  export class CreateStudentUseCase {
-    constructor(private studentRepository: StudentRepository) {}
-    
-    async execute(data: CreateStudentDTO) {
-      // Validações e regras de negócio
-      const student = await this.studentRepository.create(data);
-      return student;
-    }
-  }
-  ```
 
 ### Repositories (Repositórios)
 
@@ -102,30 +71,11 @@ server/
   - Executar queries e operações CRUD
   - Isolar a lógica de persistência da lógica de negócio
 
-- **Localização**: `src/repositories/`
-- **Padrão**:
-  ```typescript
-  export class StudentRepository {
-    async findById(id: string) {
-      return prisma.student.findUnique({ where: { id } });
-    }
-    
-    async create(data: CreateStudentDTO) {
-      return prisma.student.create({ data });
-    }
-  }
-  ```
-
 ### Middlewares
 
 - **Responsabilidade**: 
   - Interceptar requisições antes de chegarem aos controladores
   - Implementar funcionalidades transversais (autenticação, logs, tratamento de erros)
-
-- **Localização**: `src/middlewares/`
-- **Exemplos**:
-  - `error-handler.middleware.ts`: Tratamento centralizado de erros
-  - `auth.middleware.ts`: Validação de autenticação JWT
 
 ### DTOs (Data Transfer Objects)
 
@@ -189,20 +139,6 @@ Cada camada cuida de um aspecto específico:
 8. Cliente recebe resposta
 ```
 
-## Tratamento de Erros
-
-### AppError (Erros de Negócio)
-
-```typescript
-throw new AppError('Aluno não encontrado', 404);
-```
-
-### Error Handler Middleware
-
-Captura todos os erros e formata resposta apropriada:
-- **AppError**: Retorna status e mensagem definidos
-- **Outros erros**: Retorna erro 500 genérico
-
 ## Tecnologias e Ferramentas
 
 - **Node.js** + **TypeScript**: Base da aplicação
@@ -240,44 +176,11 @@ Captura todos os erros e formata resposta apropriada:
 ✅ **Reutilização**: Use Cases podem ser reutilizados em diferentes contextos  
 ✅ **Separação de Responsabilidades**: Cada componente tem um propósito claro
 
-## Exemplo Completo de Feature
-
-Para adicionar uma nova feature (ex: "Cancelar Matrícula"):
-
-1. **Criar Use Case**: `src/use-cases/enrollment/cancel-enrollment.use-case.ts`
-2. **Adicionar método no Repository**: `enrollmentRepository.cancel(id)`
-3. **Criar método no Controller**: `enrollmentController.cancel(req, res)`
-4. **Adicionar rota**: `router.patch('/enrollments/:id/cancel', ...)`
-
 ## Testes
 
 ### Estratégia de Testes
 
 O sistema tem uma estratégia de testes em múltiplas camadas, focando somente em **testes unitários** para a camada de Use Cases, que contém a lógica de negócio da aplicação.
-
-### Estrutura de Testes
-
-```
-server/
-├── src/
-│   └── __tests__/
-│       ├── mocks/                    # Dados mock reutilizáveis
-│       │   ├── student.mock.ts
-│       │   ├── course.mock.ts
-│       │   ├── class.mock.ts
-│       │   ├── enrollment.mock.ts
-│       │   └── auth.mock.ts
-│       └── unit/
-│           ├── use-cases/            # Testes unitários dos Use Cases
-│           │   ├── student/
-│           │   ├── course/
-│           │   ├── class/
-│           │   ├── enrollment/
-│           │   └── authenticate-user.use-case.test.ts
-│           └── utils/                # Testes de utilitários
-│               └── app-error.test.ts
-└── jest.config.js                    # Configuração do Jest
-```
 
 ### Testes Unitários (Use Cases)
 
@@ -286,37 +189,20 @@ server/
 ✅ **100% de cobertura** em todos os Use Cases (62 testes):
 
 **Student (27 testes)**
-- `create-student.use-case.test.ts`: Criação com validações (email, RA, CPF únicos)
-- `get-student-by-id.use-case.test.ts`: Busca por ID e tratamento de erros
-- `list-students.use-case.test.ts`: Listagem e estados vazios
-- `update-student.use-case.test.ts`: Atualização parcial e validações
-- `delete-student.use-case.test.ts`: Exclusão e efeitos cascata
 
 **Course (6 testes)**
-- `create-course.use-case.test.ts`: Criação com descrição opcional
-- `list-courses.use-case.test.ts`: Listagem de cursos
 
 **Class (8 testes)**
-- `create-class.use-case.test.ts`: Criação com validação de datas e curso
-- `list-classes.use-case.test.ts`: Listagem de turmas
 
 **Enrollment (15 testes)**
-- `create-enrollment.use-case.test.ts`: Criação com validações e prevenção de duplicatas
-- `cancel-enrollment.use-case.test.ts`: Cancelamento e validação de status
-- `list-enrollments.use-case.test.ts`: Listagem com filtros de status
 
 **Auth (7 testes)**
-- `authenticate-user.use-case.test.ts`: Login, geração JWT, validação de senha
 
 **Utils (5 testes)**
-- `app-error.test.ts`: Testes da classe de erro customizada
 
 #### Padrão AAA (Arrange, Act, Assert)
 
-Todos os testes seguem o padrão AAA:
-
-### Framework de Testes
-**Jest** + **ts-jest**:
+Todos os testes seguem o padrão AAA
 
 ### Scripts de Teste
 
