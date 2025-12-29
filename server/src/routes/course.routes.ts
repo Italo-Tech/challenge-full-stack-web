@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { CourseController } from '../controllers/course.controller';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import { validateDTO } from '../middlewares/validate-dto.middleware';
-import { createCourseDTO } from '../dtos/course.dto';
+import { createCourseDTO, updateCourseDTO } from '../dtos/course.dto';
 
 const courseRoutes = Router();
 const courseController = new CourseController();
@@ -16,5 +16,11 @@ courseRoutes.post('/', validateDTO(createCourseDTO), (req, res) =>
 );
 
 courseRoutes.get('/', (req, res) => courseController.list(req, res));
+
+courseRoutes.put('/:id', validateDTO(updateCourseDTO), (req, res) =>
+  courseController.update(req, res)
+);
+
+courseRoutes.delete('/:id', (req, res) => courseController.delete(req, res));
 
 export { courseRoutes };

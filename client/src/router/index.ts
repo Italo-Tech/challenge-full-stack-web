@@ -20,12 +20,12 @@ const router = createRouter({
       component: () => import('@/views/StudentsView.vue'),
       meta: { requiresAuth: true },
     },
-    // {
-    //   path: '/courses',
-    //   name: 'courses',
-    //   component: () => import('@/views/CoursesView.vue'),
-    //   meta: { requiresAuth: true },
-    // },
+    {
+      path: '/courses',
+      name: 'courses',
+      component: () => import('@/views/CoursesView.vue'),
+      meta: { requiresAuth: true },
+    },
     // {
     //   path: '/classes',
     //   name: 'classes',
