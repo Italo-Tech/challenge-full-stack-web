@@ -45,7 +45,21 @@ export interface Class {
   startDate: string
   endDate: string
   createdAt: string
+  updatedAt: string
   course?: Course
+}
+
+export interface CreateClassDTO {
+  name: string
+  courseId: string
+  startDate: string
+  endDate: string
+}
+
+export interface UpdateClassDTO {
+  name?: string
+  startDate?: string
+  endDate?: string
 }
 
 export interface Enrollment {

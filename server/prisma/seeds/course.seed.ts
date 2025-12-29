@@ -1,8 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
 export async function seedCourses(prisma: PrismaClient) {
-  console.log('📚 Criando 15 cursos...');
-
   const courses = [
     {
       name: 'Engenharia de Software',

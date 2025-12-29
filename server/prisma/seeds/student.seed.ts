@@ -55,8 +55,6 @@ function randomItem<T>(arr: T[]): T {
 }
 
 export async function seedStudents(prisma: PrismaClient) {
-  console.log('Criando 100 estudantes...');
-  
   const students = [];
   for (let i = 1; i <= 100; i++) {
     const firstName = randomItem(firstNames);

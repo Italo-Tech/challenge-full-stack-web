@@ -79,8 +79,8 @@ export class ClassRepository {
       data: {
         courseId: data.courseId,
         name: data.name,
-        startDate: new Date(data.startDate),
-        endDate: new Date(data.endDate),
+        startDate: new Date(`${data.startDate}T00:00:00.000Z`),
+        endDate: new Date(`${data.endDate}T00:00:00.000Z`),
       },
       include: {
         course: {
@@ -99,8 +99,9 @@ export class ClassRepository {
       where: { id },
       data: {
         ...data,
-        startDate: data.startDate ? new Date(data.startDate) : undefined,
-        endDate: data.endDate ? new Date(data.endDate) : undefined,
+        // Adicionar 'T00:00:00.000Z' para garantir que seja tratado como UTC
+        startDate: data.startDate ? new Date(`${data.startDate}T00:00:00.000Z`) : undefined,
+        endDate: data.endDate ? new Date(`${data.endDate}T00:00:00.000Z`) : undefined,
       },
       include: {
         course: {

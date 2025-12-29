@@ -5,6 +5,12 @@ export class ListClassesUseCase {
 
   async execute() {
     const classes = await this.classRepository.findAll();
-    return classes;
+    
+    // Serializar datas para evitar problemas de timezone
+    return classes.map(classItem => ({
+      ...classItem,
+      startDate: classItem.startDate.toISOString().split('T')[0],
+      endDate: classItem.endDate.toISOString().split('T')[0],
+    }));
   }
 }

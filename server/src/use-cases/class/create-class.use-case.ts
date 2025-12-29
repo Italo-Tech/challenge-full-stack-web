@@ -25,6 +25,12 @@ export class CreateClassUseCase {
     }
 
     const classCreated = await this.classRepository.create(data);
-    return classCreated;
+    
+    // Serializar datas para evitar problemas de timezone
+    return {
+      ...classCreated,
+      startDate: classCreated.startDate.toISOString().split('T')[0],
+      endDate: classCreated.endDate.toISOString().split('T')[0],
+    };
   }
 }
