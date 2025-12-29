@@ -1,65 +1,106 @@
 <template>
-  <v-container class="fill-height" fluid>
-    <v-row align="center" justify="center">
-      <v-col cols="12" sm="8" md="4">
-        <v-card class="elevation-12">
-          <v-card-title class="text-center bg-primary pa-6">
-            <h2 class="text-white">Edtech</h2>
-            <p class="text-white text-subtitle-2">Sistema Acadêmico</p>
-          </v-card-title>
+  <div class="login-wrapper">
+    <v-container class="fill-height pa-0" fluid>
+      <v-row align="center" justify="center" class="ma-0">
+        <v-col cols="12" sm="8" md="5" lg="4">
+          <v-card class="elevation-8 rounded-xl pa-8">
+            <v-card-text>
+            <!-- Header -->
+            <div class="mb-8">
+              <h1 class="text-h4 font-weight-bold mb-2">Login</h1>
+              
+            </div>
 
-          <v-card-text class="pa-6">
             <v-form @submit.prevent="handleLogin">
-              <v-text-field
-                v-model="form.email"
-                label="Email"
-                prepend-inner-icon="mdi-email"
-                type="email"
-                variant="outlined"
-                :rules="[rules.required, rules.email]"
-                :error-messages="errorMessage"
-              ></v-text-field>
+              <div class="mb-4">
+                <label class="text-body-2 text-grey-darken-2 mb-2 d-block">Email</label>
+                <v-text-field
+                  v-model="form.email"
+                  placeholder="fulano@exemplo.com"
+                  type="email"
+                  variant="outlined"
+                  density="comfortable"
+                  hide-details="auto"
+                  :rules="[rules.required, rules.email]"
+                  class="custom-input"
+                ></v-text-field>
+              </div>
 
-              <v-text-field
-                v-model="form.password"
-                label="Senha"
-                prepend-inner-icon="mdi-lock"
-                :type="showPassword ? 'text' : 'password'"
-                :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                @click:append-inner="showPassword = !showPassword"
-                variant="outlined"
-                :rules="[rules.required]"
-                :error-messages="errorMessage"
-              ></v-text-field>
+              <div class="mb-9">
+                <label class="text-body-2 text-grey-darken-2 mb-2 d-block">Senha</label>
+                <v-text-field
+                  v-model="form.password"
+                  placeholder="Entre com sua senha"
+                  :type="showPassword ? 'text' : 'password'"
+                  :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                  @click:append-inner="showPassword = !showPassword"
+                  variant="outlined"
+                  density="comfortable"
+                  hide-details="auto"
+                  :rules="[rules.required]"
+                  class="custom-input"
+                ></v-text-field>
+              </div>
 
+              <!-- Error Alert -->
+              <v-alert v-if="errorMessage" type="error" variant="tonal" class="mb-4" closable>
+                {{ errorMessage }}
+              </v-alert>
+
+              <!-- Login Button -->
               <v-btn
                 type="submit"
-                color="primary"
+                color="cyan-darken-2"
                 size="large"
                 block
                 :loading="loading"
-                class="mt-4"
+                class="text-uppercase letter-spacing-1 mb-6"
+                elevation="0"
               >
-                Entrar
+                Login
               </v-btn>
+
+              <!-- Divider -->
+              <div class="d-flex align-center my-6">
+                <v-divider></v-divider>
+                  <span class="text-grey text-body-2 mx-4 text-no-wrap">Entre com</span>
+                <v-divider></v-divider>
+              </div>
+
+              <div class="d-flex">
+                <v-btn
+                  variant="outlined"
+                  size="large"
+                  class="flex-1-1 text-none mr-4"
+                  @click="handleSocialLogin('google')"
+                >
+                  <v-icon start color="red">mdi-google</v-icon>
+                  Google
+                </v-btn>
+                <v-btn
+                  variant="outlined"
+                  size="large"
+                  class="flex-1-1 text-none"
+                  @click="handleSocialLogin('facebook')"
+                >
+                  <v-icon start color="blue">mdi-facebook</v-icon>
+                  Facebook
+                </v-btn>
+              </div>
             </v-form>
 
-            <v-alert v-if="errorMessage" type="error" class="mt-4" closable>
-              {{ errorMessage }}
-            </v-alert>
-
             <v-divider class="my-6"></v-divider>
-
-            <v-card-text class="text-center text-caption">
-              Credenciais padrão:<br />
-              Email: admin@edtech.com<br />
-              Senha: 123456
-            </v-card-text>
+            <div class="text-center text-caption text-grey">
+              <div class="font-weight-medium mb-1">Credenciais de desenvolvimento:</div>
+              <div>Email: admin@edtech.com</div>
+              <div>Senha: 123456</div>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -97,4 +138,35 @@ const handleLogin = async () => {
     loading.value = false
   }
 }
+
+const handleSocialLogin = (provider: string) => {
+  // Implementação futura de login social
+  console.log(`Login com ${provider} - Em desenvolvimento`)
+}
 </script>
+
+<style scoped>
+.login-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url('/login-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.login-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+</style>
