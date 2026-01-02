@@ -1,5 +1,9 @@
 # Comentários sobre o Projeto
 
+## GERAL
+
+Para instalação e testes, acompanhe os README.md dentro de \client e \server.
+
 ## Backend
 
 ### 1. Decisão da Arquitetura Utilizada
