@@ -44,8 +44,14 @@
 
         <template v-slot:item.description="{ item }">
           <div class="text-body-2">
-            {{ item.description || '-' }}
+            {{ truncateDescription(item.description) }}
           </div>
+        </template>
+
+        <template v-slot:item.classes="{ item }">
+          <v-badge :content="item.classes?.length || 0" color="cyan-darken-3" bordered>
+            <v-icon size="20" class="mr-1">mdi-google-classroom</v-icon>
+          </v-badge>
         </template>
 
         <template v-slot:item.actions="{ item }">
@@ -235,6 +241,7 @@ const courseToDelete = ref<Course | null>(null)
 const headers = [
   { title: 'Nome', key: 'name', sortable: true },
   { title: 'Descrição', key: 'description', sortable: true },
+  { title: 'Turmas', key: 'classes', sortable: false },
   { title: 'Ações', key: 'actions', sortable: false },
 ]
 
@@ -346,6 +353,11 @@ const showSnackbar = (message: string, color: string) => {
   snackbar.message = message
   snackbar.color = color
   snackbar.show = true
+}
+
+const truncateDescription = (desc: string) => {
+  if (!desc) return '-'
+  return desc.length > 60 ? desc.slice(0, 60) + '...' : desc
 }
 </script>
 
