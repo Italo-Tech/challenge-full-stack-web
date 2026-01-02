@@ -86,7 +86,6 @@ Onde:
 
 ### 2. Lista de Bibliotecas de Terceiros Usadas
 
-**Principais:**
 - `vue` (3.5.13): Framework progressivo para construção de interfaces
 - `vue-router` (4.4.5): Roteamento oficial do Vue com navegação programática
 - `pinia` (2.3.0): Store oficial do Vue 3, substituto do Vuex
@@ -94,13 +93,12 @@ Onde:
 - `axios` (1.7.9): Cliente HTTP para requisições à API
 - `@mdi/font` (7.4.47): Ícones Material Design
 
-**Desenvolvimento:**
 - `typescript` (5.6.3): Tipagem estática e segurança de tipos
 - `vite` (6.0.3): Build tool moderna e rápida com HMR
 - `@vitejs/plugin-vue` (5.2.1): Plugin Vite para suporte Vue 3
 - `vite-plugin-vuetify` (2.0.4): Auto-import de componentes Vuetify
 
-### 3. O que Melhoraria com Mais Tempo
+### 3. O que Melhoraria com mais tempo
 
 - **Testes Unitários**: Implementar testes com Vitest/Jest para componentes críticos
 - **Testes E2E**: Adicionar Cypress ou Playwright para testar fluxos completos
@@ -108,6 +106,7 @@ Onde:
 - **Dark Mode**: Tema escuro alternativo
 - **Exportação de Dados**: Excel/CSV para relatórios
 - **Gráficos e Dashboards**: Visualização de métricas com Chart.js
+- **Animações**: Melhor UX para o usuário final 
 
 ### 4. Funcionalidades Implementadas
 
@@ -165,3 +164,50 @@ Onde:
 - **Validação de Formulários**: Regras client-side antes de enviar ao backend
 - **Sanitização**: TypeScript previne injection através de tipagem forte
 - **HTTPS Ready**: Preparado para produção com HTTPS
+
+## Testes
+
+### Estratégia de Testes
+
+O sistema tem uma estratégia de testes em múltiplas camadas, focando somente em **testes unitários** para a camada de Use Cases, que contém a lógica de negócio da aplicação.
+
+### Testes Unitários (Use Cases)
+
+#### Cobertura de Testes
+
+✅ **100% de cobertura** em todos os Use Cases (62 testes):
+
+**Student (27 testes)**
+
+**Course (6 testes)**
+
+**Class (8 testes)**
+
+**Enrollment (15 testes)**
+
+**Auth (7 testes)**
+
+**Utils (5 testes)**
+
+#### Padrão AAA (Arrange, Act, Assert)
+
+Todos os testes seguem o padrão AAA
+
+### Scripts de Teste
+
+```json
+{
+  "test": "jest",
+  "test:watch": "jest --watch",
+  "test:coverage": "jest --coverage",
+  "test:verbose": "jest --verbose"
+}
+```
+
+### Resultados dos Testes
+
+```
+Test Suites: 14 passed, 14 total
+Tests: 62 passed, 62 total
+Cobertura Use Cases: 100%
+```
