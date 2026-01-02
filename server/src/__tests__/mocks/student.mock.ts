@@ -6,6 +6,7 @@ export const mockStudent = {
   cpf: '12345678901',
   createdAt: new Date('2024-01-01'),
   updatedAt: new Date('2024-01-01'),
+  deletedAt: null,
 };
 
 export const mockStudentList = [
@@ -18,6 +19,7 @@ export const mockStudentList = [
     cpf: '12345678902',
     createdAt: new Date('2024-01-02'),
     updatedAt: new Date('2024-01-02'),
+    deletedAt: null,
   },
   {
     id: '323e4567-e89b-12d3-a456-426614174002',
@@ -27,6 +29,7 @@ export const mockStudentList = [
     cpf: '12345678903',
     createdAt: new Date('2024-01-03'),
     updatedAt: new Date('2024-01-03'),
+    deletedAt: null,
   },
 ];
 

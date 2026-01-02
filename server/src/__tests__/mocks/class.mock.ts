@@ -5,6 +5,7 @@ export const mockClass = {
   startDate: new Date('2024-03-01'),
   endDate: new Date('2024-12-20'),
   createdAt: new Date('2024-01-15'),
+  deletedAt: null,
   course: { id: 'course-123', name: 'Curso Teste' },
   enrollments: [],
 } as any;
@@ -18,6 +19,7 @@ export const mockClassList = [
     startDate: new Date('2024-03-01'),
     endDate: new Date('2024-12-20'),
     createdAt: new Date('2024-01-16'),
+    deletedAt: null,
     course: { id: 'course-123', name: 'Curso Teste' },
     enrollments: [],
   },

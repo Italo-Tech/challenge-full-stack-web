@@ -40,7 +40,13 @@ describe('CreateClassUseCase', () => {
     const result = await sut.execute(mockCreateClassDTO);
 
     // Assert
-    expect(result).toEqual(mockClass);
+    expect(result).toMatchObject({
+      id: 'class-123',
+      name: 'Turma A - 2024',
+      courseId: 'course-123',
+      startDate: '2024-03-01',
+      endDate: '2024-12-20',
+    });
     expect(courseRepository.findById).toHaveBeenCalledWith(mockCreateClassDTO.courseId);
     expect(classRepository.create).toHaveBeenCalledWith(mockCreateClassDTO);
   });

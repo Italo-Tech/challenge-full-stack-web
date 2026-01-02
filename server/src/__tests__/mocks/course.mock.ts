@@ -3,6 +3,7 @@ export const mockCourse = {
   name: 'Engenharia de Software',
   description: 'Curso completo de Engenharia de Software',
   createdAt: new Date('2024-01-01'),
+  deletedAt: null,
   classes: [],
 };
 
@@ -13,6 +14,7 @@ export const mockCourseList = [
     name: 'Ciência da Computação',
     description: 'Curso de Ciência da Computação',
     createdAt: new Date('2024-01-02'),
+    deletedAt: null,
     classes: [],
   },
 ];

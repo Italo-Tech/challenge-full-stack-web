@@ -5,6 +5,7 @@ export const mockUser = {
   name: 'Admin Test',
   createdAt: new Date('2024-01-01'),
   updatedAt: new Date('2024-01-01'),
+  deletedAt: null,
 };
 
 export const mockLoginDTO = {

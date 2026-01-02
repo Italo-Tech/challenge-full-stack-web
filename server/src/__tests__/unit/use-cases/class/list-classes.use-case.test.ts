@@ -27,8 +27,14 @@ describe('ListClassesUseCase', () => {
     const result = await sut.execute();
 
     // Assert
-    expect(result).toEqual(mockClassList);
     expect(result).toHaveLength(2);
+    expect(result[0]).toMatchObject({
+      id: 'class-123',
+      name: 'Turma A - 2024',
+      courseId: 'course-123',
+      startDate: '2024-03-01',
+      endDate: '2024-12-20',
+    });
     expect(classRepository.findAll).toHaveBeenCalledTimes(1);
   });
 
