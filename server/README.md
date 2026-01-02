@@ -107,6 +107,8 @@ npm run test:coverage
 
 O relatório de cobertura será gerado na pasta `coverage/`.
 
+**Observação**: O projeto atualmente possui apenas **testes unitários** implementados. A ausência de **testes de integração** (que testam controllers, middlewares e rotas) resulta em uma cobertura parcial, possibilitando baixa cobertura em alguns arquivos.
+
 ### Executar testes com saída detalhada
 
 ```bash
